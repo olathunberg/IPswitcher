@@ -1,14 +1,7 @@
-﻿using System;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Net;
+﻿using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using System.Web.Script.Serialization;
 using System.Windows.Input;
-using TTech.IP_Switcher.Helpers;
 using TTech.IP_Switcher.Helpers.ShowWindow;
 
 namespace TTech.IP_Switcher.Features.About
@@ -17,16 +10,7 @@ namespace TTech.IP_Switcher.Features.About
     {
         #region Fields
         private System.Windows.Window owner;
-        private string latestVersion;
         private readonly string webLink = "https://github.com/olathunberg/IP-switcher";
-        private readonly string latestVersionApi = "https://api.github.com/repos/olathunberg/IP-switcher/releases/latest";
-        #endregion
-
-        #region Constructors
-        public AboutViewModel()
-        {
-            GetLatestVersion();
-        }
         #endregion
 
         #region Public Properties
@@ -72,26 +56,8 @@ namespace TTech.IP_Switcher.Features.About
             }
         }
 
-        public string LatestVersion
-        {
-            get
-            {
-                if (latestVersion == null)
-                    return Resources.AboutViewModelLoc.LatestVersion_Searching;
-                else
-                    return string.Format("{0} {1}", Resources.AboutViewModelLoc.LatestVersion, latestVersion);
-            }
-            set
-            {
-                latestVersion = value;
-                NotifyPropertyChanged();
-            }
-        }
 
         public string WebUrl => $"{ProjectCaption} on GitHub";
-        #endregion
-
-        #region Private / Protected
         #endregion
 
         #region Methods
@@ -111,55 +77,6 @@ namespace TTech.IP_Switcher.Features.About
                 Show.Message(other.Message);
             }
         }
-
-        [SuppressMessage("Potential Code Quality Issues", "RECS0165:Asynchronous methods should return a Task instead of void", Justification = "Eventhandler")]
-        private async void GetLatestVersion()
-        {
-            var newVersion = await GetVersionFromGitHub();
-            if (newVersion.Major == 0 && newVersion.Minor == 0)
-                LatestVersion = Resources.AboutViewModelLoc.LatestVersion_Error;
-            else
-                LatestVersion = newVersion.ToString();
-        }
-
-        private async Task<Version> GetVersionFromGitHub()
-        {
-            return await Task.Run(() =>
-            {
-                try
-                {
-                    var request = WebRequest.Create(latestVersionApi) as HttpWebRequest;
-                    request.UserAgent = "curl";
-                    request.Method = "GET";
-                    request.Accept = "application/vnd.github.v3+json";
-
-                    string releaseJon;
-                    try
-                    {
-                        using (var response = request.GetResponse())
-                        using (var reader = new StreamReader(response.GetResponseStream()))
-                        {
-                            releaseJon = reader.ReadToEnd();
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        releaseJon = null;
-                    }
-
-                    var jss = new JavaScriptSerializer();
-                    jss.RegisterConverters(new JavaScriptConverter[] { new DynamicJsonConverter() });
-
-                    dynamic release = jss.Deserialize(releaseJon, typeof(object)) as dynamic;
-
-                    return new Version(release.tag_name);
-                }
-                catch
-                {
-                    return new Version(0, 0);
-                }
-            });
-        }
         #endregion
 
         #region Events
@@ -169,9 +86,6 @@ namespace TTech.IP_Switcher.Features.About
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        #endregion
-
-        #region Event Handlers
         #endregion
 
         #region Commands

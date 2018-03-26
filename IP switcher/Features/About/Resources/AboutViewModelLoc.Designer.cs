@@ -19,7 +19,7 @@ namespace TTech.IP_Switcher.Features.About.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class AboutViewModelLoc {
@@ -57,33 +57,6 @@ namespace TTech.IP_Switcher.Features.About.Resources {
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Latest version.
-        /// </summary>
-        public static string LatestVersion {
-            get {
-                return ResourceManager.GetString("LatestVersion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to could not be retreived.
-        /// </summary>
-        public static string LatestVersion_Error {
-            get {
-                return ResourceManager.GetString("LatestVersion_Error", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Searching for latest version....
-        /// </summary>
-        public static string LatestVersion_Searching {
-            get {
-                return ResourceManager.GetString("LatestVersion_Searching", resourceCulture);
             }
         }
         

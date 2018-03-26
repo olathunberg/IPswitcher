@@ -117,15 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="LatestVersion" xml:space="preserve">
-    <value>Latest version</value>
-  </data>
-  <data name="LatestVersion_Error" xml:space="preserve">
-    <value>could not be retreived</value>
-  </data>
-  <data name="LatestVersion_Searching" xml:space="preserve">
-    <value>Searching for latest version...</value>
-  </data>
   <data name="Version" xml:space="preserve">
     <value>version</value>
   </data>
