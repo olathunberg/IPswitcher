@@ -247,7 +247,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Features\IpSwitcher\AdapterData\AdapterData.cs" />
-    <Compile Include="Features\IpSwitcher\AdapterData\AdapterDataHelpers.cs" />
+    <Compile Include="Features\IpSwitcher\AdapterData\AdapterDataExtensions.cs" />
     <Compile Include="Features\IpSwitcher\AdapterData\AdapterDataModel.cs" />
     <Compile Include="Features\DropDownButton\DropDownButton.cs" />
     <Compile Include="Helpers\DynamicJsonConverter.cs" />

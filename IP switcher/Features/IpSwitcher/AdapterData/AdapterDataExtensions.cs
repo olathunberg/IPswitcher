@@ -73,8 +73,10 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.AdapterData
             {
                 await adapter.SetDnsServers(new string[] { });
                 await SetDHCP(adapter);
+
                 var tempLocation = adapter.ExtractConfig(string.Empty);
-                await adapter.SetGateway(new string[] { tempLocation.Gateways.Last().IP });
+                if (tempLocation.Gateways != null && tempLocation.Gateways.Count > 0)
+                    await adapter.SetGateway(new string[] { tempLocation.Gateways.Last().IP });
 
                 return;
             }
@@ -228,7 +230,7 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.AdapterData
             else
                 return false;
         }
-        
+
         internal static async Task<bool> SetDnsServers(this AdapterData adapter, string[] dnsServers)
         {
             var adapterConfig = GetNetworkAdapter(adapter);
