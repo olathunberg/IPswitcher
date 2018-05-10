@@ -554,6 +554,7 @@
     <EmbeddedResource Include="Features\IpSwitcher\LocationDetail\Resources\LocationDetailViewLoc.sv.resx" />
     <EmbeddedResource Include="Features\MainView\Resources\MainViewModelLoc.sv.resx" />
     <EmbeddedResource Include="Features\MainView\Resources\MainViewLoc.sv.resx" />
+    <None Include=".editorconfig" />
     <None Include="app.config" />
     <None Include="app.manifest" />
     <None Include="IPSwitcher.pfx" />
