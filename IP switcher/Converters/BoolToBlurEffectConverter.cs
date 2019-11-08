@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media.Effects;
@@ -7,7 +8,7 @@ namespace TTech.IP_Switcher.Converters
 {
     public class BoolToBlurEffectConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType,
+        public object? Convert(object value, Type targetType,
             object parameter, CultureInfo culture)
         {
              var state = value as bool?;
