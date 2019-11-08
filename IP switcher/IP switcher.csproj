@@ -254,7 +254,6 @@
     <Compile Include="Features\IpSwitcher\AdapterData\AdapterDataExtensions.cs" />
     <Compile Include="Features\IpSwitcher\AdapterData\AdapterDataModel.cs" />
     <Compile Include="Features\DropDownButton\DropDownButton.cs" />
-    <Compile Include="Helpers\DynamicJsonConverter.cs" />
     <Compile Include="Helpers\PublicIpHelper.cs" />
     <Compile Include="Features\MessageBox\MessageBoxView.xaml.cs">
       <DependentUpon>MessageBoxView.xaml</DependentUpon>
@@ -561,7 +560,6 @@
     <None Include=".editorconfig" />
     <None Include="app.config" />
     <None Include="app.manifest" />
-    <None Include="Directory.Build.props" />
     <None Include="IPSwitcher.pfx" />
     <AppDesigner Include="Properties\" />
   </ItemGroup>
