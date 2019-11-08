@@ -46,7 +46,7 @@ namespace TTech.IP_Switcher.Features.IpSwitcher
         {
             showOnlyPhysical = true;
 
-            GetPublicIpAddress();
+            _ = GetPublicIpAddress();
 
             DoUpdateAdaptersListAsync().ContinueWith(a =>
             {
@@ -452,9 +452,7 @@ namespace TTech.IP_Switcher.Features.IpSwitcher
             Effect = false;
         }
 
-        [SuppressMessage("Potential Code Quality Issues", "RECS0165:Asynchronous methods should return a Task instead of void", Justification = "Eventhandler")]
-        [SuppressMessage("Potential Code Quality Issues", "S3168:Return 'Task' instead", Justification = "Eventhandler")]
-        private async void GetPublicIpAddress()
+        private async Task GetPublicIpAddress()
         {
             IsSearchingIp = true;
             ExternalIp = IpSwitcherViewModelLoc.Searching;
@@ -719,7 +717,7 @@ namespace TTech.IP_Switcher.Features.IpSwitcher
             get
             {
                 return getExternalIpCommand ?? (getExternalIpCommand = new RelayCommand(
-                    () => GetPublicIpAddress()));
+                    async () => await GetPublicIpAddress()));
             }
         }
 

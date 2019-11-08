@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#nullable enable
+using System;
 using System.Configuration;
 using System.IO;
 using System.Net;
@@ -15,13 +15,13 @@ namespace TTech.IP_Switcher.Helpers
             var uriList = ConfigurationManager.AppSettings["publicIpUrls"]?.Split(';');
 
             if (uriList == null)
-                return null;
+                return string.Empty;
 
-            string publicIPAddress = null;
+            string publicIPAddress = string.Empty;
             foreach (var uri in uriList)
             {
                 publicIPAddress = await RequestExtenalIp(uri);
-                publicIPAddress = publicIPAddress?.Replace("\n", "");
+                publicIPAddress = publicIPAddress.Replace("\n", "");
 
                 if (publicIPAddress != null && ValidateStringAsIpAddress(publicIPAddress))
                     break;
@@ -35,28 +35,31 @@ namespace TTech.IP_Switcher.Helpers
 
         private static async Task<string> RequestExtenalIp(string uri)
         {
-            var request = WebRequest.Create(uri) as HttpWebRequest;
-
-            request.UserAgent = "curl"; // this simulate curl linux command
-
-            string publicIPAddress;
-
-            request.Method = "GET";
-
-            try
+            if (WebRequest.Create(uri) is HttpWebRequest request)
             {
-                using (var response = await request.GetResponseAsync())
-                using (var reader = new StreamReader(response.GetResponseStream()))
+                request.UserAgent = "curl"; // this simulate curl linux command
+
+                string publicIPAddress;
+
+                request.Method = "GET";
+
+                try
                 {
-                    publicIPAddress = reader.ReadToEnd();
+                    using (var response = await request.GetResponseAsync())
+                    using (var reader = new StreamReader(response.GetResponseStream()))
+                    {
+                        publicIPAddress = reader.ReadToEnd();
+                    }
                 }
-            }
-            catch (Exception)
-            {
-                publicIPAddress = null;
+                catch (Exception)
+                {
+                    publicIPAddress = string.Empty;
+                }
+
+                return publicIPAddress;
             }
 
-            return publicIPAddress;
+            return string.Empty;
         }
 
         private static bool ValidateStringAsIpAddress(string value)
@@ -66,6 +69,5 @@ namespace TTech.IP_Switcher.Helpers
 
             return value.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries).Length == 4 && IPAddress.TryParse(value, out IPAddress ipAddr);
         }
-
     }
 }
