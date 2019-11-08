@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -15,15 +16,11 @@ namespace TTech.IP_Switcher.Features.MainView
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        #region Fields
-        private string title;
         private bool isEnabled = true;
         private bool effect;
         private readonly List<string> errortext;
-        private System.Windows.Window owner;
-        #endregion
+        private System.Windows.Window? owner;
 
-        #region Constructors
         public MainViewModel()
         {
             var assembly = Assembly.GetExecutingAssembly().GetName();
@@ -47,10 +44,8 @@ namespace TTech.IP_Switcher.Features.MainView
             errortext = new List<string>();
             SimpleMessenger.Default.Register<string>("ErrorText", x => ErrorText = x);
         }
-        #endregion
 
-        #region Public Properties
-        public string Copyright
+        public static string Copyright
         {
             get
             {
@@ -62,7 +57,7 @@ namespace TTech.IP_Switcher.Features.MainView
             }
         }
 
-        public string Company
+        public static string Company
         {
             get
             {
@@ -74,15 +69,7 @@ namespace TTech.IP_Switcher.Features.MainView
             }
         }
 
-        public string Title
-        {
-            get { return title; }
-            set
-            {
-                title = value;
-                NotifyPropertyChanged();
-            }
-        }
+        public string Title { get; }
 
         public bool IsEnabled
         {
@@ -111,7 +98,7 @@ namespace TTech.IP_Switcher.Features.MainView
             }
         }
 
-        public System.Windows.Window Owner
+        public System.Windows.Window? Owner
         {
             get { return owner; }
             set
@@ -124,7 +111,6 @@ namespace TTech.IP_Switcher.Features.MainView
                 NotifyPropertyChanged();
             }
         }
-
 
         public string ErrorText
         {
@@ -146,30 +132,20 @@ namespace TTech.IP_Switcher.Features.MainView
         }
 
         public bool HasErrortext { get { return !string.IsNullOrEmpty(ErrorText); } }
-        #endregion
 
-        #region Private / Protected
-        #endregion
+        public event PropertyChangedEventHandler? PropertyChanged;
 
-        #region Methods
-
-        #endregion
-
-        #region Events
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
+            if (string.IsNullOrEmpty(propertyName))
+            {
+                throw new ArgumentException("message", nameof(propertyName));
+            }
+
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        #endregion
 
-        #region Event Handlers
-        #endregion
-
-        #region Commands
         private readonly RelayCommand showAboutCommand;
         public ICommand ShowAbout { get { return showAboutCommand; } }
-        #endregion
     }
 }
