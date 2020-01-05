@@ -8,15 +8,13 @@ namespace TTech.IP_Switcher.Features.About
 {
     public class AboutViewModel : INotifyPropertyChanged
     {
-        #region Fields
         private System.Windows.Window owner;
         private readonly string webLink = "https://github.com/olathunberg/IP-switcher";
-        #endregion
 
         #region Public Properties
         public System.Windows.Window Owner
         {
-            get { return owner; }
+            get => owner;
             set
             {
                 if (owner == value)
@@ -56,7 +54,6 @@ namespace TTech.IP_Switcher.Features.About
             }
         }
 
-
         public string WebUrl => $"{ProjectCaption} on GitHub";
         #endregion
 
@@ -88,14 +85,6 @@ namespace TTech.IP_Switcher.Features.About
         }
         #endregion
 
-        #region Commands
-        public ICommand WebPageLink
-        {
-            get
-            {
-                return new RelayCommand(OpenWebPage, () => true);
-            }
-        }
-        #endregion
+        public ICommand WebPageLink => new RelayCommand(OpenWebPage, () => true);
     }
 }
