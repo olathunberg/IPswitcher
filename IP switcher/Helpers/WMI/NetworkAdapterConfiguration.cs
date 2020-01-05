@@ -4,9 +4,8 @@
     using System.ComponentModel;
     using System.Management;
 
-    public class NetworkAdapterConfiguration : System.ComponentModel.Component
+    public class NetworkAdapterConfiguration : Component
     {
-
         // Private property to hold the WMI namespace in which the class resides.
         private static string CreatedWmiNamespace = "root\\CimV2";
 
@@ -689,6 +688,19 @@
         public void Delete()
         {
             PrivateLateBoundObject.Delete();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if(disposing)
+            {
+                if (PrivateLateBoundObject != null)
+                    PrivateLateBoundObject.Dispose();
+
+                if (curObj != null)
+                    curObj.Dispose();
+            }
+            base.Dispose(disposing);
         }
 
         public uint DisableIPSec()

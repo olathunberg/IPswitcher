@@ -491,6 +491,19 @@
             }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(disposing)
+            {
+                if (PrivateLateBoundObject != null)
+                    PrivateLateBoundObject.Dispose();
+
+                if (curObj != null)
+                    curObj.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
         private void Initialize()
         {
             AutoCommitProp = true;
