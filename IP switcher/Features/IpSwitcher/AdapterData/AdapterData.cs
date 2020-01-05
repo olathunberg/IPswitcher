@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -10,8 +11,8 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.AdapterData
 {
     public class AdapterData : INotifyPropertyChanged
     {
-        public NetworkAdapter NetworkAdapter { get; set; }
-        public NetworkInterface NetworkInterface { get; set; }
+        public NetworkAdapter? NetworkAdapter { get; set; }
+        public NetworkInterface? NetworkInterface { get; set; }
 
         public bool NetEnabled
         {
@@ -23,13 +24,7 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.AdapterData
             }
         }
 
-        public string Description
-        {
-            get
-            {
-                return NetworkAdapter.Description;
-            }
-        }
+        public string Description => NetworkAdapter?.Description ?? string.Empty;
 
         public string Name
         {
@@ -38,14 +33,11 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.AdapterData
                 if (NetworkInterface != null)
                     return NetworkInterface.Name;
                 else
-                    return NetworkAdapter.Description;
+                    return Description;
             }
         }
 
-        public string GUID
-        {
-            get { return NetworkAdapter.GUID; }
-        }
+        public string GUID => NetworkAdapter?.GUID ?? string.Empty;
 
         public void Update(List<NetworkAdapter> adapters, List<NetworkInterface> interfaces)
         {
@@ -56,7 +48,7 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.AdapterData
         }
 
         #region Events
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
