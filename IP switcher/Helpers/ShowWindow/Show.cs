@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace TTech.IP_Switcher.Helpers.ShowWindow
             });
         }
 
-        public static bool? Dialog<T>(Action<T> callback = null) where T : Window, new()
+        public static bool? Dialog<T>(Action<T>? callback = null) where T : Window, new()
         {
             var owner = GetTopWindow();
 

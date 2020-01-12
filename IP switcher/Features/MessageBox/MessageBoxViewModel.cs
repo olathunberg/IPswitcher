@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿#nullable enable
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 
@@ -6,15 +7,10 @@ namespace TTech.IP_Switcher.Features.MessageBox
 {
     public class MessageBoxViewModel : INotifyPropertyChanged
     {
-        #region Fields
-        private Window owner;
-        #endregion
-
-        #region Constructors
-        #endregion
-
+        private Window? owner;
+ 
         #region Public Properties
-        public Window Owner
+        public Window? Owner
         {
             get { return owner; }
             set
@@ -28,18 +24,15 @@ namespace TTech.IP_Switcher.Features.MessageBox
             }
         }
 
-        public string Caption { get; set; }
+        public string Caption { get; set; } = string.Empty;
 
-        public string Content { get; set; }
+        public string Content { get; set; } = string.Empty;
 
         public bool ShowOkButton { get; set; }
 
         public bool ShowCancelButton { get; set; }
 
         public bool OkIsCancel { get; set; }
-        #endregion
-
-        #region Private / Protected
         #endregion
 
         #region Methods
@@ -79,18 +72,12 @@ namespace TTech.IP_Switcher.Features.MessageBox
         #endregion
 
         #region Events
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        #endregion
-
-        #region Event Handlers
-        #endregion
-
-        #region Commands
         #endregion
     }
 }

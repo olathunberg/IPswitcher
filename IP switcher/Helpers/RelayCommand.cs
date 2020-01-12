@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Diagnostics;
 using System.Windows.Input;
@@ -50,12 +51,12 @@ namespace TTech.IP_Switcher
         }
 
         [DebuggerStepThrough]
-        public bool CanExecute(Object parameter)
+        public bool CanExecute(Object? parameter)
         {
             return _canExecute == null || _canExecute();
         }
 
-        public void Execute(Object parameter)
+        public void Execute(Object? parameter)
         {
             _execute();
         }

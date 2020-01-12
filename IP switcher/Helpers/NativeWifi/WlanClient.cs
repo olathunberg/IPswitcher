@@ -15,7 +15,7 @@ namespace NativeWifi
     /// This class is the entrypoint to Native Wifi management. To manage WiFi settings, create an instance
     /// of this class.
     /// </remarks>
-    public class WlanClient : IDisposable
+    public sealed class WlanClient : IDisposable
     {
         /// <summary>
         /// Represents a Wifi network interface.
@@ -672,7 +672,7 @@ namespace NativeWifi
             }
         }
 
-        void IDisposable.Dispose()
+        public void Dispose()
         {
             GC.SuppressFinalize(this);
             Close();

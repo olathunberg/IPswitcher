@@ -7,15 +7,15 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.Location
 {
     public class LocationModel
     {
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
-        public string DHCPEnabled { get; set; }
+        public string DHCPEnabled { get; set; } = string.Empty;
 
-        public string Ip { get; set; }
+        public string Ip { get; set; } = string.Empty;
 
-        public string Gateways { get; set; }
+        public string Gateways { get; set; } = string.Empty;
 
-        public string Dns { get; set; }
+        public string Dns { get; set; } = string.Empty;
 
         public LocationModel()
         { }

@@ -67,7 +67,7 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.IpAddress
                 return;
             }
 
-            if ((e.Key == Key.Right && (sender as TextBox).CaretIndex == (sender as TextBox).Text.Length))
+            if ((e.Key == Key.Right && (sender as TextBox)?.CaretIndex == (sender as TextBox)?.Text?.Length))
             {
                 if (sender == Field1)
                     Field2.Focus();
@@ -78,7 +78,7 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.IpAddress
 
                 e.Handled = true;
             }
-            else if (e.Key == Key.Left && (sender as TextBox).CaretIndex == 0)
+            else if (e.Key == Key.Left && (sender as TextBox)?.CaretIndex == 0)
             {
                 if (sender == Field4)
                     Field3.Focus();
@@ -98,33 +98,36 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.IpAddress
             var tbx = sender as TextBox;
 
             byte value = 0;
-            if (!string.IsNullOrEmpty(tbx.Text) && !Byte.TryParse(tbx.Text, out value))
+            if (tbx != null)
             {
-                tbx.Text = "255";
+                if (!string.IsNullOrEmpty(tbx.Text) && !Byte.TryParse(tbx.Text, out value))
+                {
+                    tbx.Text = "255";
 
-                if (sender == Field1)
-                    Field2.Focus();
-                else if (sender == Field2)
-                    Field3.Focus();
-                else if (sender == Field3)
-                    Field4.Focus();
-            }
-            else if (tbx.Text.Length == 3)
-            {
-                if (sender == Field1)
-                    Field2.Focus();
-                else if (sender == Field2)
-                    Field3.Focus();
-                else if (sender == Field3)
-                    Field4.Focus();
+                    if (sender == Field1)
+                        Field2.Focus();
+                    else if (sender == Field2)
+                        Field3.Focus();
+                    else if (sender == Field3)
+                        Field4.Focus();
+                }
+                else if (tbx.Text.Length == 3)
+                {
+                    if (sender == Field1)
+                        Field2.Focus();
+                    else if (sender == Field2)
+                        Field3.Focus();
+                    else if (sender == Field3)
+                        Field4.Focus();
+                }
             }
 
-            SetValue(ValueProperty, string.Format("{0}.{1}.{2}.{3}", Field1.Text, Field2.Text, Field3.Text, Field4.Text));
+            SetValue(ValueProperty, string.Format("{0}.{1}.{2}.{3}", Field1?.Text, Field2?.Text, Field3?.Text, Field4?.Text));
         }
 
         private void Field_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            (sender as TextBox).SelectAll();
+            (sender as TextBox)?.SelectAll();
         }
     }
 }

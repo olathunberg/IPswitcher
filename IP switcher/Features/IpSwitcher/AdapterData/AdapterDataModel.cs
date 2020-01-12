@@ -1,4 +1,5 @@
-﻿using ROOT.CIMV2.Win32;
+﻿#nullable enable
+using ROOT.CIMV2.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,19 +14,19 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.AdapterData
 {
     public class AdapterDataModel : INotifyPropertyChanged
     {
-        private string status;
-        private string name;
-        private string speed;
-        private string winsEnabled;
+        private string status = string.Empty;
+        private string name = string.Empty;
+        private string speed = string.Empty;
+        private string winsEnabled = string.Empty;
         private bool isDhcpEnabled;
-        private string ip;
-        private string dnsServers;
-        private string gateways;
-        private string dhcpServers;
-        private string winsServers;
-        private string anyCast;
-        private string multicast;
-        private string mac;
+        private string ip = string.Empty;
+        private string dnsServers = string.Empty;
+        private string gateways = string.Empty;
+        private string dhcpServers = string.Empty;
+        private string winsServers = string.Empty;
+        private string anyCast = string.Empty;
+        private string multicast = string.Empty;
+        private string mac = string.Empty;
         private bool isActive;
         private bool hasAdapter;
 
@@ -40,7 +41,7 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.AdapterData
             Update(adapter, null, null);
         }
 
-        public void Update(AdapterData adapter, List<NetworkAdapter> adapters, List<NetworkInterface> interfaces)
+        public void Update(AdapterData adapter, List<NetworkAdapter>? adapters, List<NetworkInterface>? interfaces)
         {
             try
             {
@@ -52,11 +53,11 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.AdapterData
 
                 adapter.Update(adapters, interfaces);
 
-                Name = adapter.NetworkAdapter.Name;
-                Mac = adapter.NetworkAdapter.MACAddress;
+                Name = adapter.NetworkAdapter?.Name ?? string.Empty;
+                Mac = adapter.NetworkAdapter?.MACAddress ?? string.Empty;
 
                 Status = adapter.GetStatusText();
-                IsActive = adapter.NetworkAdapter.ConfigManagerErrorCode != NetworkAdapter.ConfigManagerErrorCodeValues.This_device_is_disabled_;
+                IsActive = adapter.NetworkAdapter?.ConfigManagerErrorCode != NetworkAdapter.ConfigManagerErrorCodeValues.This_device_is_disabled_;
 
                 HasAdapter = adapter.NetworkInterface != null;
                 if (adapter.NetworkInterface == null)
@@ -65,7 +66,7 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.AdapterData
                 var networkInterfaceIPProperties = adapter.NetworkInterface.GetIPProperties();
                 var networkInterfaceIPv4Properties = networkInterfaceIPProperties.GetIPv4Properties();
 
-                if (adapter.NetworkAdapter.NetConnectionStatus == 2)
+                if (adapter.NetworkAdapter?.NetConnectionStatus == 2)
                     Speed = (adapter.NetworkAdapter.Speed / (1000 * 1000)).ToString("F1") + " Mbps";
                 else
                     Speed = null;
@@ -125,12 +126,12 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.AdapterData
             }
         }
 
-        public string Speed
+        public string? Speed
         {
             get { return speed; }
             set
             {
-                speed = value;
+                speed = value ?? string.Empty;
                 NotifyPropertyChanged();
             }
         }
@@ -263,7 +264,7 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.AdapterData
 
         public override bool Equals(object obj)
         {
-            if (obj is AdapterDataModel && Mac == (obj as AdapterDataModel).Mac)
+            if (obj is AdapterDataModel adapterDataModel && Mac == adapterDataModel.Mac)
                 return true;
 
             return false;
@@ -275,7 +276,7 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.AdapterData
         }
 
         #region Events
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
@@ -288,7 +289,7 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.AdapterData
     {
         public static string GetStatusText(this AdapterData adapter)
         {
-            switch (adapter.NetworkAdapter.NetConnectionStatus)
+            switch (adapter.NetworkAdapter?.NetConnectionStatus)
             {
                 case 0: return Resources.AdapterDataModelLoc.Disconnected;
                 case 1: return Resources.AdapterDataModelLoc.Connecting;

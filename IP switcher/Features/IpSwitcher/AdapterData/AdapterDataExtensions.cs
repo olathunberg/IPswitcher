@@ -251,6 +251,9 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.AdapterData
 
         internal static async Task<bool> Activate(this AdapterData adapter)
         {
+            if (adapter?.NetworkAdapter == null)
+                return false;
+        
             var couldEnable = await adapter.NetworkAdapter.EnableAsync();
 
             if (couldEnable != 0)
@@ -263,6 +266,9 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.AdapterData
 
         internal static async Task<bool> Deactivate(this AdapterData adapter)
         {
+            if (adapter?.NetworkAdapter == null)
+                return false;
+            
             var couldDisable = await adapter.NetworkAdapter.DisableAsync();
             if (couldDisable != 0)
             {
@@ -275,7 +281,8 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.AdapterData
 
         private static NetworkAdapterConfiguration GetNetworkAdapter(this AdapterData adapter)
         {
-            return NetworkAdapterConfiguration.GetInstances().Cast<NetworkAdapterConfiguration>().FirstOrDefault(z => z.InterfaceIndex == adapter.NetworkAdapter.InterfaceIndex);
+            return NetworkAdapterConfiguration.GetInstances().Cast<NetworkAdapterConfiguration>()
+                .FirstOrDefault(z => z.InterfaceIndex == adapter?.NetworkAdapter?.InterfaceIndex);
         }
     }
 }

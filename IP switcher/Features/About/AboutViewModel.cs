@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿#nullable enable
+using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -8,11 +9,11 @@ namespace TTech.IP_Switcher.Features.About
 {
     public class AboutViewModel : INotifyPropertyChanged
     {
-        private System.Windows.Window owner;
+        private System.Windows.Window? owner;
         private readonly string webLink = "https://github.com/olathunberg/IP-switcher";
 
         #region Public Properties
-        public System.Windows.Window Owner
+        public System.Windows.Window? Owner
         {
             get => owner;
             set
@@ -77,7 +78,7 @@ namespace TTech.IP_Switcher.Features.About
         #endregion
 
         #region Events
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {

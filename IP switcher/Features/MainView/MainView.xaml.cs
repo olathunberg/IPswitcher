@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿#nullable enable
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
@@ -10,8 +11,8 @@ namespace TTech.IP_Switcher.Features.MainView
     /// </summary>
     public partial class MainView : Window
     {
-        private TouchPoint touchStart;
-        private RadioButton currentlyCheckedButton;
+        private TouchPoint? touchStart;
+        private RadioButton? currentlyCheckedButton;
 
         #region Constructors
         /// <summary>
@@ -78,7 +79,7 @@ namespace TTech.IP_Switcher.Features.MainView
             // Swipe right
             if (e.TouchDevice.GetTouchPoint(MainGrid).Position.X > touchStart.Position.X + 200)
             {
-                RadioButton previous = null;
+                RadioButton? previous = null;
                 foreach (var item in ButtonsPanel.Children)
                 {
                     var radioButton = item as RadioButton;
@@ -127,7 +128,7 @@ namespace TTech.IP_Switcher.Features.MainView
                 return;
 
             view.Visibility = Visibility.Visible;
-            Storyboard storyboard;
+            Storyboard? storyboard;
             bool foundPrevious = false;
 
             // Search for checked button,
@@ -151,7 +152,8 @@ namespace TTech.IP_Switcher.Features.MainView
             else
                 storyboard = Resources["SlideInFromLeft"] as Storyboard;
 
-            storyboard.Begin(view);
+            if (storyboard != null)
+                storyboard.Begin(view);
             view.Focus();
         }
 
@@ -161,7 +163,8 @@ namespace TTech.IP_Switcher.Features.MainView
                 return;
 
             var storyboard = Resources["FadeOut"] as Storyboard;
-            storyboard.Begin(sender);
+            if (storyboard != null)
+                storyboard.Begin(sender);
             sender.Visibility = Visibility.Hidden;
         }
     }

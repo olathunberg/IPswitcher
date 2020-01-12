@@ -13,7 +13,7 @@ namespace TTech.IP_Switcher.Helpers.WMI
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr LoadLibraryEx(
-            [MarshalAs(UnmanagedType.LPTStr)] string lpFileName, IntPtr hFile, uint dwFlags);
+            [MarshalAs(UnmanagedType.LPTStr)]string lpFileName, IntPtr hFile, uint dwFlags);
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
         private static extern int FormatMessageW(

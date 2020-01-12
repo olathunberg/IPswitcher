@@ -675,8 +675,7 @@
         [Browsable(true)]
         public static NetworkAdapterConfiguration CreateInstance()
         {
-            ManagementScope mgmtScope = null;
-            mgmtScope = new ManagementScope();
+            ManagementScope mgmtScope = new ManagementScope();
             mgmtScope.Path.NamespacePath = CreatedWmiNamespace;
 
             var mgmtPath = new ManagementPath(CreatedClassName);
@@ -757,8 +756,7 @@
         {
             if ((isEmbedded == false))
             {
-                ManagementBaseObject inParams = null;
-                inParams = PrivateLateBoundObject.GetMethodParameters("EnableStatic");
+                ManagementBaseObject inParams = PrivateLateBoundObject.GetMethodParameters("EnableStatic");
                 inParams["IPAddress"] = ((string[])(IPAddress));
                 inParams["SubnetMask"] = ((string[])(SubnetMask));
                 ManagementBaseObject outParams = PrivateLateBoundObject.InvokeMethod("EnableStatic", inParams, null);
@@ -805,8 +803,7 @@
         {
             if ((isEmbedded == false))
             {
-                ManagementBaseObject inParams = null;
-                inParams = PrivateLateBoundObject.GetMethodParameters("SetDNSServerSearchOrder");
+                ManagementBaseObject inParams = PrivateLateBoundObject.GetMethodParameters("SetDNSServerSearchOrder");
                 inParams["DNSServerSearchOrder"] = ((string[])(DNSServerSearchOrder));
                 ManagementBaseObject outParams = PrivateLateBoundObject.InvokeMethod("SetDNSServerSearchOrder", inParams, null);
 
@@ -822,8 +819,7 @@
         {
             if ((isEmbedded == false))
             {
-                ManagementBaseObject inParams = null;
-                inParams = PrivateLateBoundObject.GetMethodParameters("SetGateways");
+                ManagementBaseObject inParams = PrivateLateBoundObject.GetMethodParameters("SetGateways");
                 inParams["DefaultIPGateway"] = DefaultIPGateway;
                 ManagementBaseObject outParams = PrivateLateBoundObject.InvokeMethod("SetGateways", inParams, null);
 

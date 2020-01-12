@@ -7,7 +7,7 @@ namespace TTech.IP_Switcher.Features.InputBox
     /// </summary>
     public partial class InputBoxView : Window
     {
-        public string Result { get; set; }
+        public string Result { get; set; } = string.Empty;
 
         public InputBoxView()
         {

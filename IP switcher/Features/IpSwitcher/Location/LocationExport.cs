@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -9,9 +10,9 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.Location
 {
     public class LocationExport
     {
-        public string Version { get; set; }
+        public string Version { get; set; } = string.Empty;
 
-        public List<Location> Locations { get; set; }
+        public List<Location>? Locations { get; set; }
     }
 
     public static class LocationExportExtension
@@ -43,17 +44,20 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.Location
                     }
                 }
 
-                foreach (var location in importedLocations.Locations)
+                if (importedLocations?.Locations != null)
                 {
-                    if (Settings.Default.Locations.Any(x => x.Description == location.Description))
+                    foreach (var location in importedLocations.Locations)
                     {
-                        if (Show.Message(string.Format(LocationModelLoc.ImportDuplicateCaption, location.Description), LocationModelLoc.ImportDuplicateBody, AllowCancel: true))
-                            Settings.Default.Locations.Add(location);
+                        if (Settings.Default.Locations.Any(x => x.Description == location.Description))
+                        {
+                            if (Show.Message(string.Format(LocationModelLoc.ImportDuplicateCaption, location.Description), LocationModelLoc.ImportDuplicateBody, AllowCancel: true))
+                                Settings.Default.Locations.Add(location);
 
-                        continue;
+                            continue;
+                        }
+
+                        Settings.Default.Locations.Add(location);
                     }
-
-                    Settings.Default.Locations.Add(location);
                 }
 
                 Settings.Save();
