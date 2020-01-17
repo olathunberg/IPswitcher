@@ -11,8 +11,7 @@ namespace TTech.IP_Switcher.Features.WiFiManager
         {
             InitializeComponent();
 
-            var mainViewModel = MainGrid.DataContext as WiFiProfilesViewModel;
-            if (mainViewModel != null)
+            if (MainGrid.DataContext is WiFiProfilesViewModel mainViewModel)
                 mainViewModel.Owner = this;
         }
     }

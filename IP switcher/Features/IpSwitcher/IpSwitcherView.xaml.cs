@@ -11,8 +11,7 @@ namespace TTech.IP_Switcher.Features.IpSwitcher
         {
             InitializeComponent();
 
-            var mainViewModel = MainGrid.DataContext as IpSwitcherViewModel;
-            if (mainViewModel != null)
+            if (MainGrid.DataContext is IpSwitcherViewModel mainViewModel)
                 mainViewModel.Owner = this;
         }
     }

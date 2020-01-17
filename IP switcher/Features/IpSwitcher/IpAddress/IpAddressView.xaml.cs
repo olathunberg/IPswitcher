@@ -95,10 +95,8 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.IpAddress
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var tbx = sender as TextBox;
-
             byte value = 0;
-            if (tbx != null)
+            if (sender is TextBox tbx)
             {
                 if (!string.IsNullOrEmpty(tbx.Text) && !Byte.TryParse(tbx.Text, out value))
                 {

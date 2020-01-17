@@ -28,8 +28,7 @@ namespace TTech.IP_Switcher.Features.MainView
             // Get initially selected button
             foreach (var item in ButtonsPanel.Children)
             {
-                var button = item as RadioButton;
-                if (button != null && (button.IsChecked ?? false))
+                if (item is RadioButton button && (button.IsChecked ?? false))
                     currentlyCheckedButton = button;
             }
         }
@@ -82,8 +81,7 @@ namespace TTech.IP_Switcher.Features.MainView
                 RadioButton? previous = null;
                 foreach (var item in ButtonsPanel.Children)
                 {
-                    var radioButton = item as RadioButton;
-                    if (radioButton != null)
+                    if (item is RadioButton radioButton)
                     {
                         if (radioButton.IsChecked ?? false)
                         {
@@ -103,8 +101,7 @@ namespace TTech.IP_Switcher.Features.MainView
                 bool checkNext = false;
                 foreach (var item in ButtonsPanel.Children)
                 {
-                    var radioButton = item as RadioButton;
-                    if (radioButton != null)
+                    if (item is RadioButton radioButton)
                     {
                         if (checkNext)
                         {
@@ -162,8 +159,7 @@ namespace TTech.IP_Switcher.Features.MainView
             if (sender == null)
                 return;
 
-            var storyboard = Resources["FadeOut"] as Storyboard;
-            if (storyboard != null)
+            if (Resources["FadeOut"] is Storyboard storyboard)
                 storyboard.Begin(sender);
             sender.Visibility = Visibility.Hidden;
         }
