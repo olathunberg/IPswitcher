@@ -10,7 +10,7 @@ namespace TTech.IP_Switcher
         #region Members
         readonly Func<Boolean>? _canExecute;
         readonly Action _execute;
-        private EventHandler? _internalCanExecuteChanged ;
+        private EventHandler? _internalCanExecuteChanged;
         #endregion
 
         #region Constructors

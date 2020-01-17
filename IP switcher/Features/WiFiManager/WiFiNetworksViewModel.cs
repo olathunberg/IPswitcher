@@ -142,7 +142,7 @@ namespace TTech.IP_Switcher.Features.WiFiManager
         {
             if (selectedInterface != null)
                 SelectedNetwork = new NetworkModel(selectedInterface.GetAvailableNetworkList().FirstOrDefault(x => x.profileName == SelectedNetwork?.ProfileName));
-   
+
             NotifyPropertyChanged(nameof(SelectedNetwork.SignalQuality));
         }
 

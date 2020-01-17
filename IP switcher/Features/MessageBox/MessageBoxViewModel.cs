@@ -8,7 +8,7 @@ namespace TTech.IP_Switcher.Features.MessageBox
     public class MessageBoxViewModel : INotifyPropertyChanged
     {
         private Window? owner;
- 
+
         #region Public Properties
         public Window? Owner
         {
@@ -44,10 +44,10 @@ namespace TTech.IP_Switcher.Features.MessageBox
             ShowCancelButton = showCancel;
             OkIsCancel = !ShowCancelButton;
             var dialog = new MessageBoxView(this)
-                 {
-                     WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                     Owner = owner
-                 }.ShowDialog();
+            {
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Owner = owner
+            }.ShowDialog();
 
             if (dialog.HasValue)
                 return dialog.Value;

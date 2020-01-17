@@ -31,12 +31,12 @@ namespace TTech.IP_Switcher.Helpers
 
         public void Register(string message, Action callback)
         {
-            this.Register(message, callback, null);
+            Register(message, callback, null);
         }
 
         public void Register<T>(string message, Action<T> callback)
         {
-            this.Register(message, callback, typeof(T));
+            Register(message, callback, typeof(T));
         }
 
         private void Register(string message, Delegate callback, Type? parameterType)
@@ -49,7 +49,7 @@ namespace TTech.IP_Switcher.Helpers
                 if (callback == null)
                     throw new ArgumentNullException(nameof(callback));
 
-                this.VerifyParameterType(message, parameterType);
+                VerifyParameterType(message, parameterType);
 
                 _messageToActionsMap.AddAction(message, callback.Target, callback.Method, parameterType);
             }
@@ -209,7 +209,7 @@ namespace TTech.IP_Switcher.Helpers
 
                 _method = method;
 
-                this.ParameterType = parameterType;
+                ParameterType = parameterType;
 
                 if (parameterType == null)
                 {

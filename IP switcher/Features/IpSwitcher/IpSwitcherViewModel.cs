@@ -1,5 +1,4 @@
 #nullable enable
-using ROOT.CIMV2.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,6 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using ROOT.CIMV2.Win32;
 using TTech.IP_Switcher.Features.IpSwitcher.AdapterData;
 using TTech.IP_Switcher.Features.IpSwitcher.Location;
 using TTech.IP_Switcher.Features.IpSwitcher.LocationDetail;
@@ -558,7 +558,7 @@ namespace TTech.IP_Switcher.Features.IpSwitcher
         {
             if (SelectedAdapter == null)
                 return;
-         
+
             SetStatus(SwitcherStatus.DeactivatingAdapter);
             await SelectedAdapter.Deactivate();
             SetStatus(SwitcherStatus.Idle);

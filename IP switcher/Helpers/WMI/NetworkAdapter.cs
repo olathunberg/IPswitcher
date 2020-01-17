@@ -2,10 +2,10 @@
 namespace ROOT.CIMV2.Win32
 {
     using System;
-    using System.ComponentModel;
-    using System.Management;
     using System.Collections;
+    using System.ComponentModel;
     using System.Globalization;
+    using System.Management;
     using System.Threading.Tasks;
 
 
@@ -18,10 +18,10 @@ namespace ROOT.CIMV2.Win32
     public class NetworkAdapter : System.ComponentModel.Component
     {
         // Private property to hold the WMI namespace in which the class resides.
-        private static string CreatedWmiNamespace = "root\\CimV2";
+        private static readonly string CreatedWmiNamespace = "root\\CimV2";
 
         // Private property to hold the name of WMI class which created this class.
-        private static string CreatedClassName = "Win32_NetworkAdapter";
+        private static readonly string CreatedClassName = "Win32_NetworkAdapter";
 
         private ManagementSystemProperties PrivateSystemProperties;
 
@@ -43,37 +43,37 @@ namespace ROOT.CIMV2.Win32
         // Below are different overloads of constructors to initialize an instance of the class with a WMI object.
         public NetworkAdapter()
         {
-            this.InitializeObject(null, null, null);
+            InitializeObject(null, null, null);
         }
 
         public NetworkAdapter(string keyDeviceID)
         {
-            this.InitializeObject(null, new ManagementPath(NetworkAdapter.ConstructPath(keyDeviceID)), null);
+            InitializeObject(null, new ManagementPath(NetworkAdapter.ConstructPath(keyDeviceID)), null);
         }
 
         public NetworkAdapter(ManagementScope mgmtScope, string keyDeviceID)
         {
-            this.InitializeObject(((ManagementScope)(mgmtScope)), new ManagementPath(NetworkAdapter.ConstructPath(keyDeviceID)), null);
+            InitializeObject(mgmtScope, new ManagementPath(NetworkAdapter.ConstructPath(keyDeviceID)), null);
         }
 
         public NetworkAdapter(ManagementPath path, ObjectGetOptions getOptions)
         {
-            this.InitializeObject(null, path, getOptions);
+            InitializeObject(null, path, getOptions);
         }
 
         public NetworkAdapter(ManagementScope mgmtScope, ManagementPath path)
         {
-            this.InitializeObject(mgmtScope, path, null);
+            InitializeObject(mgmtScope, path, null);
         }
 
         public NetworkAdapter(ManagementPath path)
         {
-            this.InitializeObject(null, path, null);
+            InitializeObject(null, path, null);
         }
 
         public NetworkAdapter(ManagementScope mgmtScope, ManagementPath path, ObjectGetOptions getOptions)
         {
-            this.InitializeObject(mgmtScope, path, getOptions);
+            InitializeObject(mgmtScope, path, getOptions);
         }
 
         public NetworkAdapter(ManagementObject theObject)
@@ -460,7 +460,7 @@ namespace ROOT.CIMV2.Win32
         private bool CheckIfProperClass(ManagementScope mgmtScope, ManagementPath path, ObjectGetOptions OptionsParam)
         {
             if (((path != null)
-                        && (string.Compare(path.ClassName, this.ManagementClassName, true, System.Globalization.CultureInfo.InvariantCulture) == 0)))
+                        && (string.Compare(path.ClassName, ManagementClassName, true, System.Globalization.CultureInfo.InvariantCulture) == 0)))
             {
                 return true;
             }
@@ -473,7 +473,7 @@ namespace ROOT.CIMV2.Win32
         private bool CheckIfProperClass(ManagementBaseObject theObj)
         {
             if (((theObj != null)
-                        && (string.Compare(((string)(theObj["__CLASS"])), this.ManagementClassName, true, System.Globalization.CultureInfo.InvariantCulture) == 0)))
+                        && (string.Compare(((string)(theObj["__CLASS"])), ManagementClassName, true, System.Globalization.CultureInfo.InvariantCulture) == 0)))
             {
                 return true;
             }
@@ -494,7 +494,7 @@ namespace ROOT.CIMV2.Win32
 
         protected override void Dispose(bool disposing)
         {
-            if(disposing)
+            if (disposing)
             {
                 if (PrivateLateBoundObject != null)
                     PrivateLateBoundObject.Dispose();

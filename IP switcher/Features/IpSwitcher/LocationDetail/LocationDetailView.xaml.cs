@@ -1,10 +1,8 @@
 ﻿using System.Windows;
-using System.Windows.Data;
-using System;
-using System.Windows.Input;
 using System.Windows.Controls;
-using TTech.IP_Switcher.Features.IpSwitcher.LocationDetail.Resources;
+using System.Windows.Input;
 using TTech.IP_Switcher.Features.IpSwitcher.Location;
+using TTech.IP_Switcher.Features.IpSwitcher.LocationDetail.Resources;
 
 namespace TTech.IP_Switcher.Features.IpSwitcher.LocationDetail
 {

@@ -1,10 +1,10 @@
 // THIS CODE IS BASED ON THE PROJECT "Managed Wifi API" DEVELOPED BY "Monfort Software Engineering"
 using System;
-using System.Runtime.InteropServices;
-using System.Net.NetworkInformation;
-using System.Text;
-using System.Diagnostics;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Net.NetworkInformation;
+using System.Runtime.InteropServices;
+using System.Text;
 #nullable enable
 
 namespace NativeWifi
@@ -262,14 +262,14 @@ namespace NativeWifi
             /// The number of PHY types supported on available networks.
             /// The maximum value of this field is 8. If more than 8 PHY types are supported, <see cref="morePhyTypes"/> must be set to <c>true</c>.
             /// </summary>
-            private uint numberOfPhyTypes;
+            private readonly uint numberOfPhyTypes;
 #pragma warning restore S3459 // Unassigned members should be removed
             /// <summary>
             /// Contains an array of <see cref="Dot11PhyType"/> values that represent the PHY types supported by the available networks.
             /// When <see cref="numberOfPhyTypes"/> is greater than 8, this array contains only the first 8 PHY types.
             /// </summary>
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
-            private Dot11PhyType[] dot11PhyTypes;
+            private readonly Dot11PhyType[] dot11PhyTypes;
             /// <summary>
             /// Gets the <see cref="Dot11PhyType"/> values that represent the PHY types supported by the available networks.
             /// </summary>
@@ -315,7 +315,7 @@ namespace NativeWifi
             /// <summary>
             /// Reserved for future use. Must be set to NULL.
             /// </summary>
-            uint reserved;
+            readonly uint reserved;
 #pragma warning restore S1144 // Unused private types or members should be removed
         }
 
@@ -780,7 +780,7 @@ namespace NativeWifi
             /// <summary>
             /// The length, in bytes, of <see cref="rateSet"/>.
             /// </summary>
-            private uint rateSetLength;
+            private readonly uint rateSetLength;
 #pragma warning restore S3459 // Unassigned members should be removed
             /// <summary>
             /// An array of supported data transfer rates.
@@ -788,7 +788,7 @@ namespace NativeWifi
             /// A basic rate is the data transfer rate that all stations in a basic service set (BSS) can use to receive frames from the wireless medium.
             /// </summary>
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 126)]
-            private ushort[] rateSet;
+            private readonly ushort[] rateSet;
 
             public ushort[] Rates
             {

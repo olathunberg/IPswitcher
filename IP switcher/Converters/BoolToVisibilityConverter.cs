@@ -3,7 +3,6 @@ using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
-using System.Windows.Media;
 
 namespace TTech.IP_Switcher.Converters
 {
@@ -12,12 +11,12 @@ namespace TTech.IP_Switcher.Converters
         public object Convert(object value, Type targetType,
             object parameter, CultureInfo culture)
         {
-             var state = value as bool?;
+            var state = value as bool?;
 
-             if (state.HasValue && state.Value)
-                 return Visibility.Visible;
-             else
-                 return Visibility.Collapsed;
+            if (state.HasValue && state.Value)
+                return Visibility.Visible;
+            else
+                return Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType,

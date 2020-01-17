@@ -1,13 +1,13 @@
-using TTech.IP_Switcher.Features.IpSwitcher.AdapterData.Resources;
-using TTech.IP_Switcher.Features.IpSwitcher.Location;
-using TTech.IP_Switcher.Helpers.ShowWindow;
-using ROOT.CIMV2.Win32;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using ROOT.CIMV2.Win32;
+using TTech.IP_Switcher.Features.IpSwitcher.AdapterData.Resources;
+using TTech.IP_Switcher.Features.IpSwitcher.Location;
+using TTech.IP_Switcher.Helpers.ShowWindow;
 
 namespace TTech.IP_Switcher.Features.IpSwitcher.AdapterData
 {
@@ -253,7 +253,7 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.AdapterData
         {
             if (adapter?.NetworkAdapter == null)
                 return false;
-        
+
             var couldEnable = await adapter.NetworkAdapter.EnableAsync();
 
             if (couldEnable != 0)
@@ -268,7 +268,7 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.AdapterData
         {
             if (adapter?.NetworkAdapter == null)
                 return false;
-            
+
             var couldDisable = await adapter.NetworkAdapter.DisableAsync();
             if (couldDisable != 0)
             {

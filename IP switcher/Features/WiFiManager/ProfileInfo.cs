@@ -7,7 +7,7 @@ namespace TTech.IP_Switcher.Features.WiFiManager
         public ProfileInfo(string Header)
         {
             this.Header = Header;
-            this.Children = new List<ProfileInfo>();
+            Children = new List<ProfileInfo>();
         }
 
         public string Header { get; set; }

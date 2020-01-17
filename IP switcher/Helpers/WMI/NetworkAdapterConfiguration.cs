@@ -8,10 +8,10 @@ namespace ROOT.CIMV2.Win32
     public class NetworkAdapterConfiguration : Component
     {
         // Private property to hold the WMI namespace in which the class resides.
-        private static string CreatedWmiNamespace = "root\\CimV2";
+        private static readonly string CreatedWmiNamespace = "root\\CimV2";
 
         // Private property to hold the name of WMI class which created this class.
-        private static string CreatedClassName = "Win32_NetworkAdapterConfiguration";
+        private static readonly string CreatedClassName = "Win32_NetworkAdapterConfiguration";
 
         private ManagementSystemProperties PrivateSystemProperties;
 
@@ -29,37 +29,37 @@ namespace ROOT.CIMV2.Win32
         // Below are different overloads of constructors to initialize an instance of the class with a WMI object.
         public NetworkAdapterConfiguration()
         {
-            this.InitializeObject(null, null, null);
+            InitializeObject(null, null, null);
         }
 
         public NetworkAdapterConfiguration(uint keyIndex)
         {
-            this.InitializeObject(null, new ManagementPath(NetworkAdapterConfiguration.ConstructPath(keyIndex)), null);
+            InitializeObject(null, new ManagementPath(NetworkAdapterConfiguration.ConstructPath(keyIndex)), null);
         }
 
         public NetworkAdapterConfiguration(ManagementScope mgmtScope, uint keyIndex)
         {
-            this.InitializeObject(((ManagementScope)(mgmtScope)), new ManagementPath(NetworkAdapterConfiguration.ConstructPath(keyIndex)), null);
+            InitializeObject(mgmtScope, new ManagementPath(NetworkAdapterConfiguration.ConstructPath(keyIndex)), null);
         }
 
         public NetworkAdapterConfiguration(ManagementPath path, System.Management.ObjectGetOptions getOptions)
         {
-            this.InitializeObject(null, path, getOptions);
+            InitializeObject(null, path, getOptions);
         }
 
         public NetworkAdapterConfiguration(ManagementScope mgmtScope, ManagementPath path)
         {
-            this.InitializeObject(mgmtScope, path, null);
+            InitializeObject(mgmtScope, path, null);
         }
 
         public NetworkAdapterConfiguration(ManagementPath path)
         {
-            this.InitializeObject(null, path, null);
+            InitializeObject(null, path, null);
         }
 
         public NetworkAdapterConfiguration(ManagementScope mgmtScope, ManagementPath path, System.Management.ObjectGetOptions getOptions)
         {
-            this.InitializeObject(mgmtScope, path, getOptions);
+            InitializeObject(mgmtScope, path, getOptions);
         }
 
         public NetworkAdapterConfiguration(ManagementObject theObject)
@@ -462,7 +462,7 @@ namespace ROOT.CIMV2.Win32
         private bool CheckIfProperClass(ManagementScope mgmtScope, ManagementPath path, System.Management.ObjectGetOptions OptionsParam)
         {
             if (((path != null)
-                        && (string.Compare(path.ClassName, this.ManagementClassName, true, System.Globalization.CultureInfo.InvariantCulture) == 0)))
+                        && (string.Compare(path.ClassName, ManagementClassName, true, System.Globalization.CultureInfo.InvariantCulture) == 0)))
             {
                 return true;
             }
@@ -475,7 +475,7 @@ namespace ROOT.CIMV2.Win32
         private bool CheckIfProperClass(ManagementBaseObject theObj)
         {
             if (((theObj != null)
-                        && (string.Compare(((string)(theObj["__CLASS"])), this.ManagementClassName, true, System.Globalization.CultureInfo.InvariantCulture) == 0)))
+                        && (string.Compare(((string)(theObj["__CLASS"])), ManagementClassName, true, System.Globalization.CultureInfo.InvariantCulture) == 0)))
             {
                 return true;
             }
@@ -544,7 +544,7 @@ namespace ROOT.CIMV2.Win32
                 tempString = dmtf.Substring(15, 6);
                 if (("******" != tempString))
                 {
-                    ticks = (long.Parse(tempString) * ((long)((System.TimeSpan.TicksPerMillisecond / 1000))));
+                    ticks = (long.Parse(tempString) * (System.TimeSpan.TicksPerMillisecond / 1000));
                 }
                 if (((((((((year < 0)
                             || (month < 0))
@@ -567,7 +567,7 @@ namespace ROOT.CIMV2.Win32
             System.TimeSpan tickOffset = System.TimeZone.CurrentTimeZone.GetUtcOffset(datetime);
             int UTCOffset = 0;
             int OffsetToBeAdjusted = 0;
-            long OffsetMins = ((long)((tickOffset.Ticks / System.TimeSpan.TicksPerMinute)));
+            long OffsetMins = (tickOffset.Ticks / System.TimeSpan.TicksPerMinute);
             tempString = dmtf.Substring(22, 3);
             if ((tempString != "******"))
             {
@@ -581,7 +581,7 @@ namespace ROOT.CIMV2.Win32
                     throw new System.ArgumentOutOfRangeException(null, e.Message);
                 }
                 OffsetToBeAdjusted = ((int)((OffsetMins - UTCOffset)));
-                datetime = datetime.AddMinutes(((double)(OffsetToBeAdjusted)));
+                datetime = datetime.AddMinutes(OffsetToBeAdjusted);
             }
             return datetime;
         }
@@ -613,7 +613,7 @@ namespace ROOT.CIMV2.Win32
         private static string ConstructPath(uint keyIndex)
         {
             string strPath = "root\\CimV2:Win32_NetworkAdapterConfiguration";
-            strPath = string.Concat(strPath, string.Concat(".Index=", ((System.UInt32)(keyIndex)).ToString()));
+            strPath = string.Concat(strPath, string.Concat(".Index=", keyIndex.ToString()));
             return strPath;
         }
 
@@ -692,7 +692,7 @@ namespace ROOT.CIMV2.Win32
 
         protected override void Dispose(bool disposing)
         {
-            if(disposing)
+            if (disposing)
             {
                 if (PrivateLateBoundObject != null)
                     PrivateLateBoundObject.Dispose();
@@ -739,10 +739,10 @@ namespace ROOT.CIMV2.Win32
                 var mgmtPath = new ManagementPath(CreatedClassName);
                 var classObj = new ManagementClass(null, mgmtPath, null);
                 inParams = classObj.GetMethodParameters("EnableDNS");
-                inParams["DNSDomain"] = ((System.String)(DNSDomain));
-                inParams["DNSDomainSuffixSearchOrder"] = ((string[])(DNSDomainSuffixSearchOrder));
-                inParams["DNSHostName"] = ((System.String)(DNSHostName));
-                inParams["DNSServerSearchOrder"] = ((string[])(DNSServerSearchOrder));
+                inParams["DNSDomain"] = DNSDomain;
+                inParams["DNSDomainSuffixSearchOrder"] = DNSDomainSuffixSearchOrder;
+                inParams["DNSHostName"] = DNSHostName;
+                inParams["DNSServerSearchOrder"] = DNSServerSearchOrder;
                 ManagementBaseObject outParams = PrivateLateBoundObject.InvokeMethod("EnableDNS", inParams, null);
 
                 return System.Convert.ToUInt32(outParams.Properties["ReturnValue"].Value);
@@ -758,8 +758,8 @@ namespace ROOT.CIMV2.Win32
             if ((isEmbedded == false))
             {
                 ManagementBaseObject inParams = PrivateLateBoundObject.GetMethodParameters("EnableStatic");
-                inParams["IPAddress"] = ((string[])(IPAddress));
-                inParams["SubnetMask"] = ((string[])(SubnetMask));
+                inParams["IPAddress"] = IPAddress;
+                inParams["SubnetMask"] = SubnetMask;
                 ManagementBaseObject outParams = PrivateLateBoundObject.InvokeMethod("EnableStatic", inParams, null);
 
                 return System.Convert.ToUInt32(outParams.Properties["ReturnValue"].Value);
@@ -805,7 +805,7 @@ namespace ROOT.CIMV2.Win32
             if ((isEmbedded == false))
             {
                 ManagementBaseObject inParams = PrivateLateBoundObject.GetMethodParameters("SetDNSServerSearchOrder");
-                inParams["DNSServerSearchOrder"] = ((string[])(DNSServerSearchOrder));
+                inParams["DNSServerSearchOrder"] = DNSServerSearchOrder;
                 ManagementBaseObject outParams = PrivateLateBoundObject.InvokeMethod("SetDNSServerSearchOrder", inParams, null);
 
                 return System.Convert.ToUInt32(outParams.Properties["ReturnValue"].Value);

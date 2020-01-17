@@ -5,7 +5,7 @@ using NativeWifi;
 
 namespace TTech.IP_Switcher.Features.WiFiManager
 {
-    public class NetworkModel: INotifyPropertyChanged
+    public class NetworkModel : INotifyPropertyChanged
     {
         private readonly Wlan.WlanAvailableNetwork network;
 

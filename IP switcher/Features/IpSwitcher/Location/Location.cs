@@ -18,7 +18,7 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.Location
 
         public Location Clone()
         {
-            return (Location)this.MemberwiseClone();
+            return (Location)MemberwiseClone();
         }
     }
 }

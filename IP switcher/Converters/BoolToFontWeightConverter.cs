@@ -11,12 +11,12 @@ namespace TTech.IP_Switcher.Converters
         public object Convert(object value, Type targetType,
             object parameter, CultureInfo culture)
         {
-             var state = value as bool?;
+            var state = value as bool?;
 
-             if (state.HasValue && state.Value)
-                 return FontWeights.Bold;
-             else
-                 return FontWeights.Normal;
+            if (state.HasValue && state.Value)
+                return FontWeights.Bold;
+            else
+                return FontWeights.Normal;
         }
 
         public object ConvertBack(object value, Type targetType,

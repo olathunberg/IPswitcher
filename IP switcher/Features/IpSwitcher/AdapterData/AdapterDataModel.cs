@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using ROOT.CIMV2.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +7,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Runtime.CompilerServices;
+using ROOT.CIMV2.Win32;
 using TTech.IP_Switcher.Helpers;
 
 namespace TTech.IP_Switcher.Features.IpSwitcher.AdapterData
@@ -98,7 +98,7 @@ namespace TTech.IP_Switcher.Features.IpSwitcher.AdapterData
 
                 Multicast = string.Join(Environment.NewLine, networkInterfaceIPProperties.MulticastAddresses
                                                                                          .Where(z => z.Address.AddressFamily == AddressFamily.InterNetwork)
-                                                                                         .Select(x=>x.Address));
+                                                                                         .Select(x => x.Address));
             }
             catch (Exception ex)
             {

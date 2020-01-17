@@ -35,7 +35,7 @@ namespace TTech.IP_Switcher
 
         public bool SignalExternalCommandLineArgs(IList<string> args)
         {
-            this.MainWindow.Activate();
+            MainWindow.Activate();
 
             return true;
         }

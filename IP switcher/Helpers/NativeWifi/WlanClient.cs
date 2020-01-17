@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Net.NetworkInformation;
-using System.Threading;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 
 namespace NativeWifi
 {
@@ -648,7 +648,7 @@ namespace NativeWifi
         }
 
         private IntPtr clientHandle;
-        private uint negotiatedVersion;
+        private readonly uint negotiatedVersion;
         private readonly Wlan.WlanNotificationCallbackDelegate wlanNotificationCallback;
         private readonly Dictionary<Guid, WlanInterface> ifaces = new Dictionary<Guid, WlanInterface>();
 

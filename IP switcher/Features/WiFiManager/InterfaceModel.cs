@@ -17,7 +17,7 @@ namespace TTech.IP_Switcher.Features.WiFiManager
         {
             this.interFace = interFace;
 
-            UpdateInformation().ContinueWith(x => { } );
+            UpdateInformation().ContinueWith(x => { });
         }
 
         public void RefreshConnected()
@@ -51,7 +51,7 @@ namespace TTech.IP_Switcher.Features.WiFiManager
                 InterfaceName = interFace.InterfaceName;
                 InterfaceDescription = interFace.InterfaceDescription;
 
-                foreach (var item in this.GetType().GetProperties())
+                foreach (var item in GetType().GetProperties())
                     NotifyPropertyChanged(item.Name);
             }
             catch (System.Exception ex)

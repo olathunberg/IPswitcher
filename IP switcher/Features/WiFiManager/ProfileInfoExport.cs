@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using TTech.IP_Switcher.Helpers.ShowWindow;
 using NativeWifi;
+using TTech.IP_Switcher.Helpers.ShowWindow;
 
 namespace TTech.IP_Switcher.Features.WiFiManager
 {
@@ -25,13 +25,13 @@ namespace TTech.IP_Switcher.Features.WiFiManager
         public static void ReadFromFile(InterfaceModel interFace)
         {
             var dialog = new Microsoft.Win32.OpenFileDialog
-                {
-                    DefaultExt = ".xml",
-                    Filter = Resources.ProfileInfoLoc.ExportFilter,
-                    CheckPathExists = true,
-                    AddExtension = true,
-                    FileName = Resources.ProfileInfoLoc.ExportDefaultFilename
-                };
+            {
+                DefaultExt = ".xml",
+                Filter = Resources.ProfileInfoLoc.ExportFilter,
+                CheckPathExists = true,
+                AddExtension = true,
+                FileName = Resources.ProfileInfoLoc.ExportDefaultFilename
+            };
 
             if (!dialog.ShowDialog() ?? false)
                 return;
@@ -66,13 +66,13 @@ namespace TTech.IP_Switcher.Features.WiFiManager
         public static void WriteToFile(InterfaceModel interFace)
         {
             var dialog = new Microsoft.Win32.SaveFileDialog
-                {
-                    DefaultExt = ".xml",
-                    Filter = Resources.ProfileInfoLoc.ExportFilter,
-                    CheckPathExists = true,
-                    AddExtension = true,
-                    FileName = Resources.ProfileInfoLoc.ExportDefaultFilename
-                };
+            {
+                DefaultExt = ".xml",
+                Filter = Resources.ProfileInfoLoc.ExportFilter,
+                CheckPathExists = true,
+                AddExtension = true,
+                FileName = Resources.ProfileInfoLoc.ExportDefaultFilename
+            };
 
             if (!dialog.ShowDialog() ?? false)
                 return;

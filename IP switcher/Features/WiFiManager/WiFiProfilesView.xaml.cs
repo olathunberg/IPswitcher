@@ -15,5 +15,5 @@ namespace TTech.IP_Switcher.Features.WiFiManager
             if (mainViewModel != null)
                 mainViewModel.Owner = this;
         }
-   }
+    }
 }
