@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -12,17 +13,18 @@ namespace TTech.IP_Switcher.Features.WiFiManager
 {
     public class WiFiProfilesViewModel : INotifyPropertyChanged
     {
-        private System.Windows.Controls.UserControl owner;
-        private InterfaceModel selectedInterface;
-        private string selectedProfile;
+        private System.Windows.Controls.UserControl? owner;
+        private InterfaceModel? selectedInterface;
+        private string selectedProfile = string.Empty;
         private ObservableCollection<InterfaceModel> interfaces;
         private bool effect;
 
         #region Constructors
         public WiFiProfilesViewModel()
         {
-            Client = new WlanClient();
-            Interfaces = new ObservableCollection<InterfaceModel>(Client.Interfaces.Select(x => new InterfaceModel(x)).ToList());
+            interfaces = new ObservableCollection<InterfaceModel>(Client.Interfaces.Select(x => new InterfaceModel(x)).ToList());
+            Profiles = new ObservableCollection<string>();
+            ProfileTree = new List<ProfileInfo>();
             SelectedInterface = Interfaces.FirstOrDefault();
         }
         #endregion
@@ -30,27 +32,27 @@ namespace TTech.IP_Switcher.Features.WiFiManager
         #region Eventhandlers
         void SelectedInterface_WlanReasonNotification(Wlan.WlanNotificationData notifyData, Wlan.WlanReasonCode reasonCode)
         {
-            SelectedInterface.RefreshConnected();
+            SelectedInterface?.RefreshConnected();
         }
 
         void SelectedInterface_WlanNotification(Wlan.WlanNotificationData notifyData)
         {
             if (notifyData.notificationSource == Wlan.WlanNotificationSource.MSM)
             {
-                SelectedInterface.RefreshConnected();
+                SelectedInterface?.RefreshConnected();
             }
         }
 
         void SelectedInterface_WlanConnectionNotification(Wlan.WlanNotificationData notifyData, Wlan.WlanConnectionNotificationData connNotifyData)
         {
-            SelectedInterface.RefreshConnected();
+            SelectedInterface?.RefreshConnected();
         }
         #endregion
 
         #region Public Properties
-        public static WlanClient Client { get; private set; }
+        public static WlanClient Client { get; private set; } = new WlanClient();
 
-        public System.Windows.Controls.UserControl Owner
+        public System.Windows.Controls.UserControl? Owner
         {
             get { return owner; }
             set
@@ -77,7 +79,7 @@ namespace TTech.IP_Switcher.Features.WiFiManager
             }
         }
 
-        public InterfaceModel SelectedInterface
+        public InterfaceModel? SelectedInterface
         {
             get { return selectedInterface; }
             set
@@ -105,7 +107,7 @@ namespace TTech.IP_Switcher.Features.WiFiManager
                 NotifyPropertyChanged();
                 Task.Run(() =>
                     {
-                        ProfileTree = ParsePropertyXml(selectedInterface.GetProfileXml(value));
+                        ProfileTree = ParsePropertyXml(selectedInterface?.GetProfileXml(value));
                         NotifyPropertyChanged("ProfileTree");
                     });
             }
@@ -132,7 +134,7 @@ namespace TTech.IP_Switcher.Features.WiFiManager
         #endregion
 
         #region Events
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
@@ -146,16 +148,17 @@ namespace TTech.IP_Switcher.Features.WiFiManager
         {
             Task.Run(() =>
             {
-                Profiles = new ObservableCollection<string>(selectedInterface.GetProfiles());
-                SelectedProfile = Profiles.FirstOrDefault(x => x.Equals(selectedInterface.ProfileName));
+                Profiles = new ObservableCollection<string>(selectedInterface?.GetProfiles());
+                SelectedProfile = Profiles.FirstOrDefault(x => x.Equals(selectedInterface?.ProfileName));
                 NotifyPropertyChanged("Profiles");
             });
         }
 
-        private List<ProfileInfo> ParsePropertyXml(string propertyXml)
+        private List<ProfileInfo> ParsePropertyXml(string? propertyXml)
         {
             if (string.IsNullOrEmpty(propertyXml))
-                return null;
+                return new List<ProfileInfo>();
+
             var xd = new XmlDocument();
             xd.LoadXml(propertyXml);
             foreach (var item in xd.ChildNodes.OfType<XmlNode>())
@@ -163,7 +166,7 @@ namespace TTech.IP_Switcher.Features.WiFiManager
                 if (item.LocalName == "WLANProfile")
                     return GetChildNodes(item);
             }
-            return null;
+            return new List<ProfileInfo>();
         }
 
         private List<ProfileInfo> GetChildNodes(XmlNode node)
@@ -182,6 +185,9 @@ namespace TTech.IP_Switcher.Features.WiFiManager
 
         private void DoExportProfiles()
         {
+            if (selectedInterface == null)
+                return;
+
             Effect = true;
 
             try
@@ -196,6 +202,9 @@ namespace TTech.IP_Switcher.Features.WiFiManager
 
         private void DoImportPresets()
         {
+            if (selectedInterface == null)
+                return;
+
             Effect = true;
 
             try
@@ -216,27 +225,7 @@ namespace TTech.IP_Switcher.Features.WiFiManager
 
             try
             {
-                selectedInterface.interFace.DeleteProfile(selectedProfile);
-
-                RefreshProfiles();
-            }
-            finally
-            {
-                Effect = false;
-            }
-        }
-
-        private void DoRenameSelected()
-        {
-            Effect = true;
-
-            try
-            {
-                var newProfile = selectedInterface.GetProfileXml(selectedProfile);
-                var newProfileInfo = selectedInterface.GetProfileInfos().FirstOrDefault(x => x.profileName == SelectedProfile);
-
-                selectedInterface.interFace.SetProfile(newProfileInfo.profileFlags, newProfile, false);
-                selectedInterface.interFace.DeleteProfile(selectedProfile);
+                selectedInterface?.interFace.DeleteProfile(selectedProfile);
 
                 RefreshProfiles();
             }
@@ -248,7 +237,7 @@ namespace TTech.IP_Switcher.Features.WiFiManager
         #endregion
 
         #region Commands
-        private RelayCommand importProfilesCommand;
+        private RelayCommand? importProfilesCommand;
         public ICommand Import
         {
             get
@@ -259,7 +248,7 @@ namespace TTech.IP_Switcher.Features.WiFiManager
             }
         }
 
-        private RelayCommand exportProfilesCommand;
+        private RelayCommand? exportProfilesCommand;
         public ICommand Export
         {
             get
@@ -269,7 +258,7 @@ namespace TTech.IP_Switcher.Features.WiFiManager
                     () => selectedInterface != null));
             }
         }
-        private RelayCommand deleteSelectedCommand;
+        private RelayCommand? deleteSelectedCommand;
         public ICommand DeleteSelected
         {
             get

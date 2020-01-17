@@ -9,20 +9,14 @@ namespace TTech.IP_Switcher.Features.WiFiManager
 {
     public class ProfileInfoExport
     {
-        public string Version { get; set; }
-
-        private List<ProfileInfoExportItem> profiles = new List<ProfileInfoExportItem>();
-        public List<ProfileInfoExportItem> Profiles
-        {
-            get { return profiles; }
-            set { profiles = value; }
-        }
+        public string Version { get; set; } = string.Empty;
+        public List<ProfileInfoExportItem> Profiles { get; set; } = new List<ProfileInfoExportItem>();
     }
 
     public class ProfileInfoExportItem
     {
-        public string ProfileName { get; set; }
-        public string Profile { get; set; }
+        public string ProfileName { get; set; } = string.Empty;
+        public string Profile { get; set; } = string.Empty;
         public Wlan.WlanProfileFlags Flags { get; set; }
     }
 

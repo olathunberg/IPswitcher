@@ -16,9 +16,7 @@ namespace TTech.IP_Switcher.Features.WiFiManager
         {
             this.interFace = interFace;
 
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-            UpdateInformation();
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+            UpdateInformation().ContinueWith(x => { } );
         }
 
         public void RefreshConnected()
@@ -39,7 +37,7 @@ namespace TTech.IP_Switcher.Features.WiFiManager
             {
                 if (interFace.NetworkInterface != null)
                 {
-                    ProfileName = IsConnected ? interFace.CurrentConnection.profileName : null;
+                    ProfileName = IsConnected ? interFace.CurrentConnection.profileName : string.Empty;
                     SignalQuality = IsConnected ? interFace.CurrentConnection.wlanAssociationAttributes.wlanSignalQuality : 0;
                     InterfaceState = interFace.InterfaceState;
                     Channel = GetChannel();
@@ -101,7 +99,7 @@ namespace TTech.IP_Switcher.Features.WiFiManager
             }
         }
 
-        public string ProfileName { get; private set; }
+        public string ProfileName { get; private set; } = string.Empty;
 
         public uint SignalQuality { get; private set; }
 
@@ -117,9 +115,9 @@ namespace TTech.IP_Switcher.Features.WiFiManager
 
         public bool Autoconf { get; private set; }
 
-        public string InterfaceName { get; private set; }
+        public string InterfaceName { get; private set; } = string.Empty;
 
-        public string InterfaceDescription { get; private set; }
+        public string InterfaceDescription { get; private set; } = string.Empty;
 
         public string[] GetProfiles()
         {
@@ -166,7 +164,7 @@ namespace TTech.IP_Switcher.Features.WiFiManager
         }
 
         #region Events
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         private void NotifyPropertyChanged(string propertyName)
         {

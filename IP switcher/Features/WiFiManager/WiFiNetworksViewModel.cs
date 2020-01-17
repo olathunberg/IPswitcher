@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -10,23 +11,21 @@ namespace TTech.IP_Switcher.Features.WiFiManager
 {
     public class WiFiNetworksViewModel : INotifyPropertyChanged
     {
-        private System.Windows.Controls.UserControl owner;
-        private InterfaceModel selectedInterface;
-        private NetworkModel selectedNetwork;
-        private ObservableCollection<InterfaceModel> interfaces;
+        private System.Windows.Controls.UserControl? owner;
+        private InterfaceModel? selectedInterface;
+        private NetworkModel? selectedNetwork;
 
         #region Constructors
         public WiFiNetworksViewModel()
         {
-            Client = new WlanClient();
             Interfaces = new ObservableCollection<InterfaceModel>(Client.Interfaces.Select(x => new InterfaceModel(x)).ToList());
             SelectedInterface = Interfaces.FirstOrDefault();
         }
         #endregion
 
-        public static WlanClient Client { get; private set; }
+        public static WlanClient Client { get; private set; } = new WlanClient();
 
-        public System.Windows.Controls.UserControl Owner
+        public System.Windows.Controls.UserControl? Owner
         {
             get { return owner; }
             set
@@ -48,13 +47,16 @@ namespace TTech.IP_Switcher.Features.WiFiManager
 
         private void Owner_IsVisibleChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
         {
-            if (owner.IsVisible)
+            if (selectedInterface == null)
+                return;
+
+            if (owner != null && owner.IsVisible)
             {
                 selectedInterface.interFace.WlanConnectionNotification += SelectedInterface_WlanConnectionNotification;
                 selectedInterface.interFace.WlanNotification += SelectedInterface_WlanNotification;
                 selectedInterface.interFace.WlanReasonNotification += SelectedInterface_WlanReasonNotification;
 
-                SelectedInterface?.UpdateInformation();
+                _ = selectedInterface.UpdateInformation();
             }
             else
             {
@@ -64,18 +66,9 @@ namespace TTech.IP_Switcher.Features.WiFiManager
             }
         }
 
-        public ObservableCollection<InterfaceModel> Interfaces
-        {
-            get { return interfaces; }
-            set
-            {
-                if (interfaces == value)
-                    return;
-                interfaces = value; NotifyPropertyChanged();
-            }
-        }
+        public ObservableCollection<InterfaceModel> Interfaces { get; private set; }
 
-        public InterfaceModel SelectedInterface
+        public InterfaceModel? SelectedInterface
         {
             get { return selectedInterface; }
             set
@@ -85,7 +78,9 @@ namespace TTech.IP_Switcher.Features.WiFiManager
                 {
                     Task.Run(() =>
                         {
-                            Networks = new ObservableCollection<NetworkModel>(selectedInterface.GetAvailableNetworkList().Select(x => new NetworkModel(x)));
+                            Networks.Clear();
+                            foreach (var network in selectedInterface.GetAvailableNetworkList().Select(x => new NetworkModel(x)))
+                                Networks.Add(network);
                             SelectedNetwork = Networks.FirstOrDefault(x => x.IsConnected);
                             NotifyPropertyChanged(nameof(Networks));
                         });
@@ -95,9 +90,9 @@ namespace TTech.IP_Switcher.Features.WiFiManager
             }
         }
 
-        public ObservableCollection<NetworkModel> Networks { get; set; }
+        public ObservableCollection<NetworkModel> Networks { get; private set; } = new ObservableCollection<NetworkModel>();
 
-        public NetworkModel SelectedNetwork
+        public NetworkModel? SelectedNetwork
         {
             get { return selectedNetwork; }
             set
@@ -134,7 +129,9 @@ namespace TTech.IP_Switcher.Features.WiFiManager
 
                 Task.Run(() =>
                 {
-                    Networks = new ObservableCollection<NetworkModel>(selectedInterface.GetAvailableNetworkList().Select(x => new NetworkModel(x)));
+                    if (selectedInterface != null)
+                        Networks = new ObservableCollection<NetworkModel>(selectedInterface.GetAvailableNetworkList().Select(x => new NetworkModel(x)));
+
                     SelectedNetwork = Networks.FirstOrDefault(x => x.IsConnected);
                     NotifyPropertyChanged(nameof(Networks));
                 });
@@ -143,12 +140,14 @@ namespace TTech.IP_Switcher.Features.WiFiManager
 
         void UpdateNetworkSignalQuality()
         {
-            SelectedNetwork = new NetworkModel(selectedInterface.GetAvailableNetworkList().FirstOrDefault(x => x.profileName == SelectedNetwork?.ProfileName));
+            if (selectedInterface != null)
+                SelectedNetwork = new NetworkModel(selectedInterface.GetAvailableNetworkList().FirstOrDefault(x => x.profileName == SelectedNetwork?.ProfileName));
+   
             NotifyPropertyChanged(nameof(SelectedNetwork.SignalQuality));
         }
 
         #region Events
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {

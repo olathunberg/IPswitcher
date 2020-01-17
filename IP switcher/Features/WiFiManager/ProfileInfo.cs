@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace TTech.IP_Switcher.Features.WiFiManager
 {
@@ -11,12 +7,13 @@ namespace TTech.IP_Switcher.Features.WiFiManager
         public ProfileInfo(string Header)
         {
             this.Header = Header;
+            this.Children = new List<ProfileInfo>();
         }
 
         public string Header { get; set; }
 
-        public List<ProfileInfo> Children { get; set; }
+        public List<ProfileInfo> Children { private get; set; }
 
-        public bool HasChildren { get { return Children != null && Children.Count > 0; } }
+        public bool HasChildren { get { return Children.Count > 0; } }
     }
 }

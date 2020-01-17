@@ -58,7 +58,7 @@ namespace TTech.IP_Switcher.Features.WiFiManager
         }
 
         #region Events
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         private void NotifyPropertyChanged(string propertyName)
         {
