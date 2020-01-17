@@ -5,6 +5,7 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Diagnostics;
 using System.ComponentModel;
+#nullable enable
 
 namespace NativeWifi
 {
@@ -344,7 +345,7 @@ namespace NativeWifi
             [In, MarshalAs(UnmanagedType.LPStruct)] Guid interfaceGuid,
             [In] WlanProfileFlags flags,
             [In, MarshalAs(UnmanagedType.LPWStr)] string profileXml,
-            [In, Optional, MarshalAs(UnmanagedType.LPWStr)] string allUserProfileSecurity,
+            [In, Optional, MarshalAs(UnmanagedType.LPWStr)] string? allUserProfileSecurity,
             [In] bool overwrite,
             [In] IntPtr pReserved,
             [Out] out WlanReasonCode reasonCode);

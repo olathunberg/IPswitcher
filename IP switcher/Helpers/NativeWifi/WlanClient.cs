@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -49,17 +50,17 @@ namespace NativeWifi
             /// <summary>
             /// Occurs when an event of any kind occurs on a WLAN interface.
             /// </summary>
-            public event WlanNotificationEventHandler WlanNotification;
+            public event WlanNotificationEventHandler? WlanNotification;
 
             /// <summary>
             /// Occurs when a WLAN interface changes connection state.
             /// </summary>
-            public event WlanConnectionNotificationEventHandler WlanConnectionNotification;
+            public event WlanConnectionNotificationEventHandler? WlanConnectionNotification;
 
             /// <summary>
             /// Occurs when a WLAN operation fails due to some reason.
             /// </summary>
-            public event WlanReasonNotificationEventHandler WlanReasonNotification;
+            public event WlanReasonNotificationEventHandler? WlanReasonNotification;
 
             #endregion
 
@@ -602,7 +603,7 @@ namespace NativeWifi
             /// <remarks>
             /// The network interface allows querying of generic network properties such as the interface's IP address.
             /// </remarks>
-            public NetworkInterface NetworkInterface
+            public NetworkInterface? NetworkInterface
             {
                 get
                 {
@@ -642,7 +643,7 @@ namespace NativeWifi
             /// </summary>
             public string InterfaceName
             {
-                get { return NetworkInterface.Name; }
+                get { return NetworkInterface?.Name ?? string.Empty; }
             }
         }
 

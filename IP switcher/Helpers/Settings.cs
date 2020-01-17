@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using TTech.IP_Switcher.Features.IpSwitcher.Location;
@@ -20,7 +21,7 @@ namespace TTech.IP_Switcher
             get { return defaultInstance; }
         }
 
-        public string Version { get; set; }
+        public string Version { get; set; } = string.Empty;
 
         public List<Location> Locations { get; set; }
         #endregion
@@ -101,7 +102,7 @@ namespace TTech.IP_Switcher
         #endregion
 
         #region Events
-        public event EventHandler PropertyChanged;
+        public event EventHandler? PropertyChanged;
 
         /// <summary>
         /// Raises the <see cref="PropertyChanged" /> event.

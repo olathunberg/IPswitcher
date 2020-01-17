@@ -1,4 +1,5 @@
-﻿namespace ROOT.CIMV2.Win32
+﻿#nullable disable
+namespace ROOT.CIMV2.Win32
 {
     using System;
     using System.ComponentModel;

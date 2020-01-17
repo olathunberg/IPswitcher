@@ -8,9 +8,9 @@ namespace TTech.IP_Switcher
     public class RelayCommand : ICommand
     {
         #region Members
-        readonly Func<Boolean> _canExecute;
+        readonly Func<Boolean>? _canExecute;
         readonly Action _execute;
-        private EventHandler _internalCanExecuteChanged;
+        private EventHandler? _internalCanExecuteChanged ;
         #endregion
 
         #region Constructors
@@ -19,7 +19,7 @@ namespace TTech.IP_Switcher
         {
         }
 
-        public RelayCommand(Action execute, Func<Boolean> canExecute)
+        public RelayCommand(Action execute, Func<Boolean>? canExecute)
         {
             if (execute == null)
                 throw new ArgumentNullException(nameof(execute));
@@ -77,7 +77,7 @@ namespace TTech.IP_Switcher
         /// </summary>
         protected virtual void OnCanExecuteChanged()
         {
-            EventHandler eCanExecuteChanged = _internalCanExecuteChanged;
+            EventHandler? eCanExecuteChanged = _internalCanExecuteChanged;
             if (eCanExecuteChanged != null)
                 eCanExecuteChanged(this, EventArgs.Empty);
         }

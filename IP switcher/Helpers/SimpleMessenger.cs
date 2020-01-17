@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -6,7 +7,7 @@ namespace TTech.IP_Switcher.Helpers
 {
     public class SimpleMessenger
     {
-        private static SimpleMessenger defaultInstance;
+        private static SimpleMessenger? defaultInstance;
         private static readonly object creationLock = new object();
         private readonly object registerLock = new object();
         readonly MessageToActionsMap _messageToActionsMap = new MessageToActionsMap();
@@ -38,7 +39,7 @@ namespace TTech.IP_Switcher.Helpers
             this.Register(message, callback, typeof(T));
         }
 
-        private void Register(string message, Delegate callback, Type parameterType)
+        private void Register(string message, Delegate callback, Type? parameterType)
         {
             lock (registerLock)
             {
@@ -54,9 +55,9 @@ namespace TTech.IP_Switcher.Helpers
             }
         }
 
-        private void VerifyParameterType(string message, Type parameterType)
+        private void VerifyParameterType(string message, Type? parameterType)
         {
-            if (_messageToActionsMap.TryGetParameterType(message, out Type previouslyRegisteredParameterType))
+            if (_messageToActionsMap.TryGetParameterType(message, out Type? previouslyRegisteredParameterType))
             {
                 if (previouslyRegisteredParameterType != null && parameterType != null)
                 {
@@ -91,7 +92,7 @@ namespace TTech.IP_Switcher.Helpers
         {
             if (String.IsNullOrEmpty(message))
                 throw new ArgumentException("'message' cannot be null or empty.");
-            if (_messageToActionsMap.TryGetParameterType(message, out Type registeredParameterType) && registeredParameterType == null)
+            if (_messageToActionsMap.TryGetParameterType(message, out Type? registeredParameterType) && registeredParameterType == null)
                 throw new TargetParameterCountException(string.Format("Cannot pass a parameter with message '{0}'. Registered action(s) expect no parameter.", message));
 
             var actions = _messageToActionsMap.GetActions(message);
@@ -104,7 +105,7 @@ namespace TTech.IP_Switcher.Helpers
             if (String.IsNullOrEmpty(message))
                 throw new ArgumentException("'message' cannot be null or empty.");
 
-            if (_messageToActionsMap.TryGetParameterType(message, out Type registeredParameterType) && registeredParameterType != null)
+            if (_messageToActionsMap.TryGetParameterType(message, out Type? registeredParameterType) && registeredParameterType != null)
                 throw new TargetParameterCountException(string.Format("Must pass a parameter of type {0} with this message. Registered action(s) expect it.", registeredParameterType.FullName));
 
             var actions = _messageToActionsMap.GetActions(message);
@@ -114,7 +115,7 @@ namespace TTech.IP_Switcher.Helpers
 
         private class MessageToActionsMap
         {
-            internal void AddAction(string message, object target, MethodInfo method, Type actionType)
+            internal void AddAction(string message, object target, MethodInfo method, Type? actionType)
             {
                 if (message == null)
                     throw new ArgumentNullException(nameof(message));
@@ -173,7 +174,7 @@ namespace TTech.IP_Switcher.Helpers
                 return actions;
             }
 
-            internal bool TryGetParameterType(string message, out Type parameterType)
+            internal bool TryGetParameterType(string message, out Type? parameterType)
             {
                 if (message == null)
                     throw new ArgumentNullException(nameof(message));
@@ -195,7 +196,7 @@ namespace TTech.IP_Switcher.Helpers
 
         private class WeakAction
         {
-            internal WeakAction(object target, MethodInfo method, Type parameterType)
+            internal WeakAction(object target, MethodInfo method, Type? parameterType)
             {
                 if (target == null)
                 {
@@ -220,7 +221,7 @@ namespace TTech.IP_Switcher.Helpers
                 }
             }
 
-            internal Delegate CreateAction()
+            internal Delegate? CreateAction()
             {
                 // Rehydrate into a real Action object, so that the method can be invoked.
                 if (_targetRef == null)
@@ -249,11 +250,11 @@ namespace TTech.IP_Switcher.Helpers
                 return null;
             }
 
-            internal readonly Type ParameterType;
+            internal readonly Type? ParameterType;
 
             readonly Type _delegateType;
             readonly MethodInfo _method;
-            readonly WeakReference _targetRef;
+            readonly WeakReference? _targetRef;
         }
     }
 }
